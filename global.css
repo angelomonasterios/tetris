@@ -1,0 +1,23 @@
+body{
+    background: darkgray;
+}
+
+div.col {
+    width: 20px;
+    height: 20px;
+    background: #00000026;
+    margin: 1px;
+}
+
+
+div.row {
+    display: flex;
+}
+
+div.col.square {
+    background: #2b4dd5;
+}
+
+div.boxFixed {
+    background: #911b42;
+}
