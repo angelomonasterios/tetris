@@ -1,0 +1,1 @@
+export type newElement = [element: HTMLElement, type: string]

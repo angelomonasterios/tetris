@@ -1,4 +1,4 @@
-export function initGrid(sizeGameAreaX: number, sizeGameAreaY: number) {
+export const initGrid = (sizeGameAreaX: number, sizeGameAreaY: number) => {
     let gameArea = document.createElement('div');
     gameArea.classList.add('container');
     for (let x = 0; x < sizeGameAreaY; x++) {

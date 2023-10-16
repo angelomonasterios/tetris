@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
     "rootDir": "./src",
-    "module": "commonjs",
+    "module": "CommonJS",
+    "esModuleInterop": true,
     "target": "ES6",
-
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist"
   },
   "include": [
     "./src/**/*.ts"
   ],
   "exclude": [
-    "node_modules" // Excluir la carpeta node_modules de la compilación
+    "node_modules"
   ]
 }

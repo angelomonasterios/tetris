@@ -1,7 +1,17 @@
 import {generateSquare} from "./square";
+import {generateLine} from "./line";
 
-export * from "./square";
+export type figure = {
+    elements: HTMLElement[],
+    paint: (elements: HTMLElement[]) => void
+}
 
-export function getRandonElement(): HTMLElement[] {
-    return generateSquare(7, 0)
+const intPosition = {x: 7, y: 0};
+const figures = [  generateSquare, generateLine];
+
+
+export function getRandonElement(): figure {
+    const random = Math.floor(Math.random() * figures.length);
+    return figures[random](intPosition.x, intPosition.y)
+
 }

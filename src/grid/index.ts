@@ -1,1 +1,3 @@
-export * from "./gameArea";
+import {initGrid} from "./gameArea";
+
+export {initGrid}

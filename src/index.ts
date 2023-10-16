@@ -1,43 +1,34 @@
-import {getRandonElement, paintSquare} from "./fugure";
+import {getRandonElement} from "./fugure";
 import {initGrid} from "./grid";
+import {down} from "./movements/down/down";
+import {newElement} from "./movements/down/newElement";
+import {moveLeft} from "./movements/left/moveLeft";
+import {moveRight} from "./movements/right/moveRigth";
+import {rotateFigure} from "./movements/rotate";
 
 export const sizeGameAreaX = 15;
 export const sizeGameAreaY = 20;
 
 initGrid(sizeGameAreaX, sizeGameAreaY);
 
-let currenActiveELement = getRandonElement();
+let {elements: currenActiveELement, paint} = getRandonElement();
 
-paintSquare(currenActiveELement);
-
-let colition = 0;
+paint(currenActiveELement);
 
 function drodDowncurrenElement() {
-    let collectNewElements = [];
-    for (let i = 0; i < currenActiveELement.length; i++) {
-        let element = currenActiveELement[i];
-        let box = element.id
-        let type = element.classList[1];
-        let boxX = parseInt(box.split('_')[2]);
-        let boxY = parseInt(box.split('_')[1]);
-        let nextElement = 'col' + '_' + (boxY + 1) + '_' + boxX;
-        let newelement = [document.getElementById(nextElement), type];
-        collectNewElements.push(newelement);
-        element.classList.remove('square');
-    }
+    let collectNewElements: newElement[] = [];
+    collectNewElements = down(collectNewElements, currenActiveELement);
 
     if (collectNewElements.some(element => element[0] == null) ||
         collectNewElements.some(element => element[0].classList.contains('boxFixed'))
     ) {
-        if (collectNewElements.some(element => element[0].id.split('_')[1] === 0)) {
-            alert('game over');
-        }
         currenActiveELement.forEach(element => {
             element.classList.add('boxFixed');
         });
 
-        currenActiveELement = getRandonElement();
-        paintSquare(currenActiveELement);
+        let {elements: element, paint} = getRandonElement();
+        currenActiveELement = element;
+        paint(element);
 
         return;
     }
@@ -54,10 +45,16 @@ setInterval(drodDowncurrenElement, 700);
 
 
 document.addEventListener('keydown', function (event) {
-    if (event.key === 'keyLeft') {
-        console.log('left');
-        // mover a la izquierda
-
+    if (event.code === 'ArrowLeft') {
+        currenActiveELement = moveLeft(currenActiveELement);
+    } else if (event.code === 'ArrowRight') {
+        currenActiveELement = moveRight(currenActiveELement);
+    } else if (event.code === 'ArrowDown') {
+        drodDowncurrenElement();
+    } else if (event.code === 'Space') {
+        if (currenActiveELement[0].classList.contains('boxFixed')) {
+            return currenActiveELement;
+        }
+       currenActiveELement =  rotateFigure(currenActiveELement);
     }
-
 });
