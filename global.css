@@ -14,6 +14,10 @@ div.row {
     display: flex;
 }
 
+div.boxFixed {
+    background: #911b42;
+}
+
 div.col.square {
     background: #2b4dd5;
 }
@@ -21,6 +25,11 @@ div.col.line {
     background: #248321;
 }
 
-div.boxFixed {
-    background: #911b42;
+div.t {
+    background: #7211cc;
 }
+
+div.l {
+    background: #1dcc11;
+}
+

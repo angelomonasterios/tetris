@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = {
+module.exports =  {
     mode: 'development',
     entry: "./src/index.ts",
     output: {
@@ -11,14 +11,21 @@ module.exports = {
     devtool: "source-map",
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        fallback: { "path": false }
     },
     module: {
         rules: [
             { test: /\.ts?$/, loader: "ts-loader" },
-            { test: /\.js$/, loader: "source-map-loader" },
+            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
         ],
-
     },
-    // Other options...
+    // Add the watch options
+    watch: process.env.NODE_ENV === "development",
+    watchOptions: {
+        ignored: /node_modules/,
+        aggregateTimeout: 300,
+        poll: 1000
+    },
 };
