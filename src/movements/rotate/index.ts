@@ -1,85 +1,49 @@
-export function validRotate(current: HTMLElement[], newElement: HTMLElement[]): boolean {
-    if (newElement.length === 0) {
-        return false;
-    }
-
-    if (newElement[0] === null) {
-        return false;
-    }
-
-    for (let i = 0; i < newElement.length; i++) {
-        if (newElement[i] == null || newElement[i].classList.contains('boxFixed')) {
-            return false;
-        }
-    }
-
-    return true;
+export function isValidRotation(current: HTMLElement[], newFigures: HTMLElement[]): boolean {
+    return newFigures.every(figure => figure !== null && !figure.classList.contains('boxFixed'));
 }
 
-function dropOldFigure(figures: HTMLElement[], type: string) {
-    for (let i = 0; i < figures.length; i++) {
-        figures[i].classList.remove(type);
-
-    }
+function toggleFigureClass(figures: HTMLElement[], type: string, add: boolean) {
+    const verb = add ? 'add' : 'remove';
+    figures.forEach((figure) => figure.classList[verb](type));
 }
 
-function addNewFigure(newElements: HTMLElement[], type: string) {
-    for (let i = 0; i < newElements.length; i++) {
-        newElements[i].classList.add(type);
-    }
+function getIdCoordinates(id: string): [number, number] {
+    const parts = id.split('_');
+    return [parseInt(parts[1]), parseInt(parts[2])];
+}
+
+function getFigureById(y: number, x: number) {
+    return document.getElementById('col' + '_' + y + '_' + x);
 }
 
 export function rotateFigure(figures: HTMLElement[]): HTMLElement[] {
-    let newElements: HTMLElement[] = [];
-    let type = figures[0].classList[1];
-    let nextElement = []
+    console.log('figures ', figures);
+    const type = figures[0].classList[1];
+    const nextFigures = figures.map(figure => {
+        const [y, x] = getIdCoordinates(figure.id);
+        return {y: y, x: x};
+    });
 
-    for (let i = 0; i < figures.length; i++) {
-        let box = figures[i].id;
-        let boxY = parseInt(box.split('_')[1]);
-        let boxX = parseInt(box.split('_')[2]);
-        nextElement.push({y: boxY + 1, x: boxX});
-    }
-
+    let newFigures: HTMLElement[] = [];
     if (type === 'line') {
-        if (nextElement[0].x === nextElement[1].x) {
-            let element1 = document.getElementById('col' + '_' + (nextElement[1].y) + '_' + (nextElement[1].x + 1));
-            let element2 = document.getElementById('col' + '_' + (nextElement[1].y) + '_' + (nextElement[1].x));
-            let element3 = document.getElementById('col' + '_' + (nextElement[1].y) + '_' + (nextElement[1].x - 1));
-            let element4 = document.getElementById('col' + '_' + (nextElement[1].y) + '_' + (nextElement[1].x - 2));
-            newElements.push(element1, element2, element3, element4);
+        if (nextFigures[0].x === nextFigures[1].x) {
+            newFigures = [1, 0, -1, -2].map(offset => getFigureById(nextFigures[1].y, nextFigures[1].x + offset));
         } else {
-            let element1 = document.getElementById('col' + '_' + (nextElement[1].y - 1) + '_' + (nextElement[1].x));
-            let element2 = document.getElementById('col' + '_' + (nextElement[1].y) + '_' + (nextElement[1].x));
-            let element3 = document.getElementById('col' + '_' + (nextElement[1].y + 1) + '_' + (nextElement[1].x));
-            let element4 = document.getElementById('col' + '_' + (nextElement[1].y + 2) + '_' + (nextElement[1].x));
-            newElements.push(element1, element2, element3, element4);
+            newFigures = [-1, 0, 1, 2].map(offset => getFigureById(nextFigures[1].y + offset, nextFigures[1].x));
         }
-
     } else if (type === 't') {
-        if (nextElement[0].y === nextElement[1].y && nextElement[2].y === nextElement[2].y && nextElement[3].x < nextElement[2].x) {
-            let element2 = document.getElementById('col' + '_' + (nextElement[1].y) + '_' + (nextElement[1].x));
-            let element3 = document.getElementById('col' + '_' + (nextElement[0].y -1) + '_' + (nextElement[2].x -1));
-            let element1 = document.getElementById('col' + '_' + (nextElement[0].y) + '_' + (nextElement[0].x));
-            let element4 = document.getElementById('col' + '_' + (nextElement[3].y) + '_' + (nextElement[3].x ));
-            newElements.push(element1, element2, element3, element4);
-        } else if (nextElement[0].y < nextElement[1].y && nextElement[1].y === nextElement[2].y && nextElement[3].x == nextElement[2].x) {
-            let element2 = document.getElementById('col' + '_' + (nextElement[1].y) + '_' + (nextElement[1].x));
-            let element3 = document.getElementById('col' + '_' + (nextElement[0].y -1) + '_' + (nextElement[2].x -1));
-            let element1 = document.getElementById('col' + '_' + (nextElement[0].y) + '_' + (nextElement[0].x));
-            let element4 = document.getElementById('col' + '_' + (nextElement[3].y) + '_' + (nextElement[3].x ));
-            newElements.push(element1, element2, element3, element4);
-        }
+        let pivot = {y: nextFigures[1].y, x: nextFigures[1].x};
+        newFigures = nextFigures.map((figure) => {
+            const newY = pivot.y + (figure.x - pivot.x);
+            const newX = pivot.x - (figure.y - pivot.y);
+            return getFigureById(newY, newX);
+        });
     }
 
-
-    if (!validRotate(figures, newElements)) {
+    if (!isValidRotation(figures, newFigures)) {
         return figures;
     }
-
-    dropOldFigure(figures, type);
-    addNewFigure(newElements, type);
-
-    return newElements;
+    toggleFigureClass(figures, type, false);
+    toggleFigureClass(newFigures, type, true);
+    return newFigures;
 }
-
