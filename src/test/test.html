@@ -11,9 +11,30 @@
 <select id="selectTest">
     <option value="line">line</option>
     <option value="t">T</option>
+    <option value="l">L</option>
 </select>
 <button id="start">start test</button>
 <script type="module" src="/dist/test.js"></script>
+
+<script>
+    window.onload = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const test = urlParams.get('test');
+        if (test) {
+            document.getElementById('selectTest').value = test;
+        }
+    }
+
+    document.getElementById('start').addEventListener('click', () => {
+        const test = document.getElementById('selectTest').value;
+        const currentUrl = new URL(window.location.href);
+
+        currentUrl.searchParams.delete('test');
+
+        currentUrl.searchParams.set('test', test);
+
+    });
+</script>
 
 </body>
 </html>

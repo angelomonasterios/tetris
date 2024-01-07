@@ -4,6 +4,7 @@ import {globalVars} from "../globalVars";
 import {handleKeyEvents} from "../handleKeyEvents";
 import {observerPause} from "../observerPause";
 import {testT} from "./t/t";
+import {testL} from "./l/t";
 
 initGrid(globalVars.sizeGameAreaX, globalVars.sizeGameAreaY);
 handleKeyEvents();
@@ -21,6 +22,9 @@ button.addEventListener('click', () => {
             break;
         case 't':
             testT();
+            break;
+        case 'l':
+            testL();
             break;
     }
 });

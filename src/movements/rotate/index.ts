@@ -17,7 +17,6 @@ function getFigureById(y: number, x: number) {
 }
 
 export function rotateFigure(figures: HTMLElement[]): HTMLElement[] {
-    console.log('figures ', figures);
     const type = figures[0].classList[1];
     const nextFigures = figures.map(figure => {
         const [y, x] = getIdCoordinates(figure.id);
@@ -38,12 +37,21 @@ export function rotateFigure(figures: HTMLElement[]): HTMLElement[] {
             const newX = pivot.x - (figure.y - pivot.y);
             return getFigureById(newY, newX);
         });
+    } else if (type === 'l') {
+        let pivot = {y: nextFigures[1].y, x: nextFigures[1].x};
+        newFigures = nextFigures.map((figure) => {
+            const newY = pivot.y + (figure.x - pivot.x);
+            const newX = pivot.x - (figure.y - pivot.y);
+            return getFigureById(newY, newX);
+        });
     }
 
     if (!isValidRotation(figures, newFigures)) {
         return figures;
     }
+
     toggleFigureClass(figures, type, false);
     toggleFigureClass(newFigures, type, true);
+
     return newFigures;
 }
