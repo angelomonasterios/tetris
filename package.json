@@ -8,9 +8,11 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "glob": "^10.3.10",
     "lodash": "^4.17.21",
     "source-map-loader": "^4.0.1",
     "ts-loader": "^9.4.4",
     "webpack": "^5.88.2"
-  }
+  },
+  "node": "^18.0.0"
 }

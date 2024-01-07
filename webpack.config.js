@@ -1,11 +1,14 @@
 const path = require('path');
 
-module.exports =  {
+module.exports = {
     mode: 'development',
-    entry: "./src/index.ts",
+    entry: {
+        "app": "./src/index.ts",
+        "test": "./src/test/index.ts"
+    },
     output: {
-        filename: "./bundle.js",
-        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js',
+        path: path.resolve(__dirname, "dist"),
     },
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
