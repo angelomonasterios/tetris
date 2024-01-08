@@ -30,6 +30,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: my-artifact
-        path: ./dist/
+        path: dist/
     - name: List directory
       run: ls -R
