@@ -26,3 +26,8 @@ jobs:
       run: |
         npm install
         npm run deploy
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: './dist'
