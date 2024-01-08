@@ -1,6 +1,8 @@
 {
   "scripts": {
     "build": "npx webpack",
+    "predeploy": "npx webpack --mode production",
+    "deploy": "gs-pages -d dist",
     "watch": "npx webpack --watch"
   },
   "devDependencies": {
