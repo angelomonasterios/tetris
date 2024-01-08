@@ -1,4 +1,5 @@
 {
+  "homepage": "https://angelomonasterios.github.io/tetris",
   "scripts": {
     "build": "npx webpack",
     "predeploy": "npx webpack --mode production",
