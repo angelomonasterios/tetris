@@ -2,10 +2,11 @@
   "scripts": {
     "build": "npx webpack",
     "predeploy": "npx webpack --mode production",
-    "deploy": "gs-pages -d dist",
+    "deploy": "gh-pages -d dist",
     "watch": "npx webpack --watch"
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "typescript": "^5.2.2",
     "webpack-cli": "^5.1.4"
   },
