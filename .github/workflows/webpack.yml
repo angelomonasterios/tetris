@@ -26,10 +26,14 @@ jobs:
       run: |
         npm install
         npm run build
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
       with:
-        name: my-artifact
-        path: dist/
+        path: "./dist"
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
     - name: List directory
       run: ls -R
