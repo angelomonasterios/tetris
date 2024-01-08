@@ -5,6 +5,7 @@ import {handleKeyEvents} from "../handleKeyEvents";
 import {observerPause} from "../observerPause";
 import {testT} from "./t/t";
 import {testL} from "./l/t";
+import {removeLinesTest} from "./removeLines/removeLines";
 
 initGrid(globalVars.sizeGameAreaX, globalVars.sizeGameAreaY);
 handleKeyEvents();
@@ -26,5 +27,9 @@ button.addEventListener('click', () => {
         case 'l':
             testL();
             break;
+        case 'removeLinesTest':
+            removeLinesTest();
+            break;
+
     }
 });
