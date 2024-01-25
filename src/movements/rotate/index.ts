@@ -16,35 +16,57 @@ function getFigureById(y: number, x: number) {
     return document.getElementById('col' + '_' + y + '_' + x);
 }
 
+function getRotatedLineFigures(nextFigures: any[]): HTMLElement[] {
+    return (nextFigures[0].x === nextFigures[1].x)
+        ? [1, 0, -1, -2].map(offset => getFigureById(nextFigures[1].y, nextFigures[1].x + offset))
+        : [-1, 0, 1, 2].map(offset => getFigureById(nextFigures[1].y + offset, nextFigures[1].x));
+}
+
+function getRotatedTFigures(nextFigures: any[]): HTMLElement[] {
+    let pivot = {y: nextFigures[1].y, x: nextFigures[1].x};
+    return nextFigures.map(figure => {
+        const newY = pivot.y + (figure.x - pivot.x);
+        const newX = pivot.x - (figure.y - pivot.y);
+        return getFigureById(newY, newX);
+    });
+}
+
+function getRotatedLFigures(nextFigures: any[]): HTMLElement[] {
+    let pivot = {y: nextFigures[1].y, x: nextFigures[1].x};
+    return nextFigures.map(figure => {
+        const newY = pivot.y + (figure.x - pivot.x);
+        const newX = pivot.x - (figure.y - pivot.y);
+        return getFigureById(newY, newX);
+    });
+}
+
+function getNewFigureByType(type: string, nextFigures: any[]): HTMLElement[] {
+    switch (type) {
+        case 'line':
+            return getRotatedLineFigures(nextFigures);
+        case 't':
+            return getRotatedTFigures(nextFigures);
+        case 'l':
+            return getRotatedLFigures(nextFigures);
+        default:
+            return nextFigures;
+    }
+}
+
 export function rotateFigure(figures: HTMLElement[]): HTMLElement[] {
     const type = figures[0].classList[1];
     const nextFigures = figures.map(figure => {
-        const [y, x] = getIdCoordinates(figure.id);
+        let [y, x] = getIdCoordinates(figure.id);
         return {y: y, x: x};
     });
 
     let newFigures: HTMLElement[] = [];
-    if (type === 'line') {
-        if (nextFigures[0].x === nextFigures[1].x) {
-            newFigures = [1, 0, -1, -2].map(offset => getFigureById(nextFigures[1].y, nextFigures[1].x + offset));
-        } else {
-            newFigures = [-1, 0, 1, 2].map(offset => getFigureById(nextFigures[1].y + offset, nextFigures[1].x));
-        }
-    } else if (type === 't') {
-        let pivot = {y: nextFigures[1].y, x: nextFigures[1].x};
-        newFigures = nextFigures.map((figure) => {
-            const newY = pivot.y + (figure.x - pivot.x);
-            const newX = pivot.x - (figure.y - pivot.y);
-            return getFigureById(newY, newX);
-        });
-    } else if (type === 'l') {
-        let pivot = {y: nextFigures[1].y, x: nextFigures[1].x};
-        newFigures = nextFigures.map((figure) => {
-            const newY = pivot.y + (figure.x - pivot.x);
-            const newX = pivot.x - (figure.y - pivot.y);
-            return getFigureById(newY, newX);
-        });
+
+    if (type == 'square') {
+        return figures;
     }
+
+    newFigures = getNewFigureByType(type, nextFigures);
 
     if (!isValidRotation(figures, newFigures)) {
         return figures;
