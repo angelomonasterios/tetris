@@ -1,11 +1,15 @@
-import {moveLeft} from "./movements/left/moveLeft";
-import {moveRight} from "./movements/right/moveRigth";
-import {rotateFigure} from "./movements/rotate";
-import {drodDowncurrenElement} from "./drodDowncurrenElement";
-import {globalVars} from "./globalVars";
+import {moveLeft} from "../movements/left/moveLeft";
+import {moveRight} from "../movements/right/moveRigth";
+import {rotateFigure} from "../movements/rotate";
+import {drodDowncurrenElement} from "../collisionSystem/drodDowncurrenElement";
+import {globalVars} from "../globalVars";
 
 export function handleKeyEvents(): void {
     document.addEventListener('keydown', function (event) {
+        if (globalVars.pause || globalVars.gameOver) {
+            return;
+        }
+
         if (event.code === 'ArrowLeft') {
             globalVars.currenActiveELement = moveLeft(globalVars.currenActiveELement);
         } else if (event.code === 'ArrowRight') {

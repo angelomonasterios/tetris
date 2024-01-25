@@ -1,5 +1,6 @@
-import {removeRowFixed} from "./removeRowFixed";
-import {globalVars} from "./globalVars";
+import {removeRowFixed} from "../events/removeRowFixed";
+import {globalVars} from "../globalVars";
+import {scoreEvent} from "../index";
 
 interface CustomNode extends ChildNode, ParentNode {
     getElementsByClassName(className: string): any[];
@@ -25,7 +26,6 @@ function handleBoxFixedElem(removedRows: number) {
             const row:number = Number(rowString);
             const col: number = Number(colString);
 
-            console.log(row, globalVars.sizeGameAreaY - 1);
             if (row >= globalVars.sizeGameAreaY - 1) {
                 continue;
             }
@@ -36,7 +36,6 @@ function handleBoxFixedElem(removedRows: number) {
             if (!elementBelow || elementBelow.classList.contains(BOX_FIXED_CLASS)) {
                 continue;
             }
-
             elementBelow.classList.add(BOX_FIXED_CLASS);
             item.classList.remove(BOX_FIXED_CLASS);
         }
@@ -53,6 +52,7 @@ export function observeRows(): void {
         const row = container[i] as unknown as CustomNode;
         if (isRowFullyFixed(row)) {
             removeRowFixed(i);
+            document.dispatchEvent(scoreEvent);
             removedRows++;
         }
     }

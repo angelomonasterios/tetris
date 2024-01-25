@@ -14,5 +14,5 @@ export const initGrid = (sizeGameAreaX: number, sizeGameAreaY: number) => {
         }
         gameArea.appendChild(divRow);
     }
-    document.body.appendChild(gameArea);
+    document.getElementById('game').appendChild(gameArea);
 }
