@@ -1,8 +1,9 @@
-import {globalVars} from "./globalVars";
+import {globalVars} from "../globalVars";
 
 
 export function observerPause() {
-    document.getElementById('pause').addEventListener('click', function () {
+    const pauseButton = document.getElementById('pause');
+    pauseButton.addEventListener('click', function () {
         if (globalVars.pause) {
             globalVars.pause = false;
             document.getElementById('pause').innerHTML = 'Pause';
@@ -10,5 +11,8 @@ export function observerPause() {
             globalVars.pause = true;
             document.getElementById('pause').innerHTML = 'Play';
         }
+
+        pauseButton.blur();
+
     });
 }

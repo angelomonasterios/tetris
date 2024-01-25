@@ -1,5 +1,10 @@
-body{
-    background: darkgray;
+body {
+    background: #d7d7d7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 75Vh;
 }
 
 div.col {
@@ -33,3 +38,100 @@ div.l {
     background: #1dcc11;
 }
 
+button#pause {
+    margin: 10px 0;
+    padding: 10px;
+    background: #28a745!important;
+    min-width: 100px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.instructions {
+    min-width: 330px;
+}
+.instructions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.instructions ul li {
+    margin: 10px 0;
+}
+
+.instructions ul li span {
+    font-weight: bold;
+    font-size: 1.2em;
+    width: 30px;
+}
+
+#gameOver {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000000a6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999;
+}
+
+#gameOver .body {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 300px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    top: -15%;
+    position: relative;
+}
+
+#gameOver .body h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+#gameOver .body button {
+    margin: 10px 0;
+    padding: 10px;
+    background: #007bff;
+    min-width: 100px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.topGame {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.topGame .score {
+    display: flex;
+    font-weight: bold;
+
+}
+
+.topGame .score h2 {
+    font-size: 24px;
+    margin: 0 10px;
+    align-self: center;
+}
+
+.topGame .score span {
+    font-size: 24px;
+    margin: 0;
+    align-self: center;
+}

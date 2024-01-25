@@ -6,7 +6,32 @@
     <link rel="stylesheet" href="global.css">
 </head>
 <body>
-<button id="pause" >Pause</button>
+<div id="game">
+    <div class="topGame">
+        <button id="pause">Play</button>
+        <div class="score">
+            <h2>Score</h2>
+            <span id="score">0</span>
+        </div>
+    </div>
+</div>
+<div id="gameOver" style="display: none">
+    <div class="body">
+        <h1>Game Over</h1>
+        <button id="restart">Restart</button>
+    </div>
+</div>
+<section class="instructions">
+    <h2>&#127918; Gameplay Instructions</h2>
+    <ul>
+        <li><span>&#11013;</span> <strong>Move Left:</strong> Arrow left</li>
+        <li><span>&#10145;</span> <strong>Move Right:</strong> Arrow right</li>
+        <li><span>&#11015;</span> <strong>Move Down:</strong> Arrow down</li>
+        <li><span>&#9251;</span> <strong>Rotate:</strong> Arrow up</li>
+    </ul>
+</section>
+
+
 <script type="module" src="./dist/app.js"></script>
 
 </body>
